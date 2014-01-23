@@ -19,10 +19,8 @@ optional arguments:
 ```
 
 ##Wanna contribute?
-Find something I've done wrong, feel free to fix it and chuck me a pull request! Otherwise you're always welcome to drop me a bug report on the tracker on [Github](https://github.com/rmgr/PingPlus/).
+Find something I've done wrong or want to add a feature? Feel free to fix it and chuck me a pull request! Otherwise you're always welcome to drop me a message on the issue tracker on [Github](https://github.com/rmgr/PingPlus/).
 
 ##Credit
 I'm using [Samuel's](https://github.com/samuel/python-ping) great Python Ping implementation.
 
-##Contact
-Feel free to drop me a message on the tracker.
