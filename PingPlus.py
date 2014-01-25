@@ -2,7 +2,7 @@
 ##Ping with extra bits
 ##https://github.com/rmgr/PingPlus
 
-import os,time,argparse,urllib2
+import os,time,argparse,urllib2,socket
 ###
 #1st run? Get this https://raw.github.com/samuel/python-ping/master/ping.py
 ###
@@ -52,14 +52,34 @@ looping = True
 
 #Lets get to pinging
 while looping:
-    #Logging will require a reimplementation of ping.verbose_ping or something- looking at that later
-
+    time.sleep(float(interval))
     if args.timestamp == True:
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-    
-    ping.verbose_ping(args.destination,2,1)
+#Liberally copied from Ping.py
+    if log != -1:
+        if args.timestamp == True:
+            log.write(time.strftime("%Y-%m-%d %H:%M:%S \n", time.localtime()))
+        try:
+            delay = ping.do_one(args.destination, 2)
+        except socket.gaierror, e:
+            log.write("failed. (socket error: '%s')" % e[1])
+            print "failed. (socket error: '%s')" % e[1]
+            break
+
+        if delay == None:
+            log.write("failed. (timeout within %ssec.)" % 2)
+            print "failed. (timeout within %ssec.)" % 2
+        else:
+            delay = delay * 1000
+            log.write("get ping in %0.4fms" % delay)
+            print "get ping in %0.4fms" % delay
+        log.write("\n")
+                   
+    #Logging will require a reimplementation of ping.verbose_ping or something- looking at that later
+    else:
+        ping.verbose_ping(args.destination,2,1)
     if count > 0:
         count = count - 1
     if count == 0:
         looping = False
-    time.sleep(float(interval))
+
